@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #F4EFE6;
+    color: #141210;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+.editorial-btn {
+  @apply px-6 py-3 bg-parlour-dark text-parlour-cream font-bold text-xs uppercase tracking-wider transition-all duration-300 relative inline-flex items-center justify-center;
+  border: 1px solid #141210;
+}
+
+.editorial-btn:hover {
+  @apply bg-transparent text-parlour-dark;
+}
+
+.editorial-outline-btn {
+  @apply px-6 py-3 bg-transparent text-parlour-dark font-bold text-xs uppercase tracking-wider transition-all duration-300 relative inline-flex items-center justify-center;
+  border: 1px solid #141210;
+}
+
+.editorial-outline-btn:hover {
+  @apply bg-parlour-dark text-parlour-cream;
+}
+
+.dotted-line {
+  flex-grow: 1;
+  border-bottom: 1px dashed rgba(20, 18, 16, 0.3);
+  margin: 0 10px;
+  height: 1px;
+}
+
+@keyframes luxuryMarquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-luxury-marquee {
+  display: flex;
+  width: max-content;
+  animation: luxuryMarquee 25s linear infinite;
+}
+
+.animate-luxury-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ==========================================================================
+   LENIS SMOOTH SCROLL INTEGRATION
+   ========================================================================== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   EDITORIAL DISSOLVE PAGE TRANSITION
+   ========================================================================== */
+.editorial-page-enter-active {
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.editorial-page-leave-active {
+  transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.editorial-page-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.editorial-page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ==========================================================================
+   HOMEPAGE ROOT SPACING & MICRO-ANIMATION CONTAINERS
+   ========================================================================== */
+.homepage-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.elastic-divider-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: -8px;
+  margin-bottom: -8px;
+  pointer-events: auto;
+}
+
+.hero-typography-trail {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  border-radius: 4px;
+}
+
+/* Ensure trail images have editorial grain */
+.trail-image {
+  mix-blend-mode: multiply;
+}
