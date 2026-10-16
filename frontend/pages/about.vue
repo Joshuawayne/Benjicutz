@@ -496,11 +496,39 @@
 import { useHead } from "#imports";
 
 useHead({
-  title: "About Us • Craftsman Mobile Barber Studio Nairobi",
+  title: "About Master Barber Benjamin Johnson • Heritage & Craftsmanship",
   meta: [
     {
       name: "description",
-      content: "Discover Benjamin Johnson and the Craftsman Mobile Barber Studio. Private in-suite executive barbering, micro-airblading hairline restoration, and zero-wait house calls in Nairobi."
+      content: "Discover Master Barber Benjamin Johnson and the BenjiCutz Mobile Barber Parlour. In-suite executive barbering, micro-airblading hairline restoration, and zero-wait house calls across Nairobi."
+    },
+    { property: "og:title", content: "Master Barber Benjamin Johnson | BenjiCutz Nairobi" },
+    { property: "og:description", content: "Over a decade of anatomical fade engineering, straight-razor mastery, and executive house calls in Nairobi." },
+    { property: "og:url", content: "https://benjicutz.vercel.app/about" },
+    { property: "og:image", content: "https://benjicutz.vercel.app/images/about.webp" }
+  ],
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Benjamin Johnson",
+        "jobTitle": "Founder & Master Barber Craftsman",
+        "worksFor": {
+          "@type": "BarberShop",
+          "name": "BenjiCutz Craftsman Barber Parlour",
+          "url": "https://benjicutz.vercel.app"
+        },
+        "description": "Master Barber specializing in cranial anatomy hair sculpting, micro-airblading hairline restoration, and luxury house calls across Nairobi.",
+        "image": "https://benjicutz.vercel.app/images/benjamin.jpg",
+        "knowsAbout": [
+          "Anatomical Barbering",
+          "Beard Architecture",
+          "Micro-Airblading Hairline Restoration",
+          "Executive Grooming Concierge"
+        ]
+      })
     }
   ]
 });

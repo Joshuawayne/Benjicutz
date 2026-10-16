@@ -473,6 +473,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { useHead } from "#imports";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LifestyleToneSelector from "~/components/visual/LifestyleToneSelector.vue";
@@ -480,6 +481,138 @@ import MacroPrecisionSlider from "~/components/visual/MacroPrecisionSlider.vue";
 import ElasticLine from "~/components/visual/ElasticLine.vue";
 import ImageTrail from "~/components/visual/ImageTrail.vue";
 import { useRetainer } from "~/composables/useRetainer";
+
+// SEO & AEO (Answer Engine Optimization) Structured Data
+useHead({
+  title: "Craftsman Mobile Barber Parlour Nairobi • Master Cuts & House Calls",
+  meta: [
+    {
+      name: "description",
+      content: "Experience Nairobi's finest luxury mobile haircutting and beard grooming. Master Barber Benjamin Johnson delivers in-suite precision fades, hairline micro-airblading, and scheduled executive retainer house calls across Westlands, Kilimani, Karen, and Muthaiga."
+    }
+  ],
+  script: [
+    // 1. LocalBusiness / BarberShop Schema for Local SEO & Search Engine Knowledge Panels
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BarberShop",
+        "@id": "https://benjicutz.vercel.app/#barbershop",
+        "name": "BenjiCutz Craftsman Barber Parlour",
+        "alternateName": "BenjiCutz Nairobi",
+        "image": "https://benjicutz.vercel.app/images/hero.jpg",
+        "url": "https://benjicutz.vercel.app",
+        "telephone": "+254792843862",
+        "priceRange": "KES 1500 - KES 15000",
+        "currenciesAccepted": "KES",
+        "paymentAccepted": "M-Pesa, Cash, Credit Card",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Nairobi Metropolis",
+          "addressLocality": "Nairobi",
+          "addressRegion": "Nairobi County",
+          "postalCode": "00100",
+          "addressCountry": "KE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -1.2921,
+          "longitude": 36.8219
+        },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Westlands" },
+          { "@type": "AdministrativeArea", "name": "Kilimani" },
+          { "@type": "AdministrativeArea", "name": "Karen" },
+          { "@type": "AdministrativeArea", "name": "Lavington" },
+          { "@type": "AdministrativeArea", "name": "Runda" },
+          { "@type": "AdministrativeArea", "name": "Muthaiga" },
+          { "@type": "AdministrativeArea", "name": "Gigiri" },
+          { "@type": "AdministrativeArea", "name": "Kileleshwa" },
+          { "@type": "AdministrativeArea", "name": "Nairobi CBD" }
+        ],
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "07:00",
+            "closes": "21:00"
+          }
+        ],
+        "founder": {
+          "@type": "Person",
+          "name": "Benjamin Johnson",
+          "jobTitle": "Master Barber & Grooming Craftsman"
+        }
+      })
+    },
+    // 2. FAQPage Schema for AI Answer Engines (Perplexity, ChatGPT, Claude, Google Gemini / SGE)
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What mobile barber services does BenjiCutz provide in Nairobi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BenjiCutz provides master executive haircuts, precision beard sculpting, micro-airblading hairline restoration, organic hot towel scalp treatments, and VIP in-suite house calls across Nairobi."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which areas in Nairobi does the BenjiCutz mobile barber travel to?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BenjiCutz provides house-call and office mobile barbering services throughout Westlands, Kilimani, Karen, Lavington, Runda, Muthaiga, Gigiri, Kileleshwa, Riverside, and Nairobi CBD."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do BenjiCutz executive retainer tiers work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Retainer tiers are monthly grooming memberships that include scheduled bi-weekly or weekly house calls with guaranteed priority calendar reservation, complimentary scalp treatments, and zero travel surcharges."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I book an appointment with Master Barber Benjamin Johnson?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can book an appointment online at benjicutz.vercel.app/bookings or initiate an immediate booking conversation through the official WhatsApp Concierge (+254 792 843 862)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What payment methods are accepted by BenjiCutz?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "BenjiCutz accepts Safaricom M-Pesa, Cash in Kenya Shillings (KES), and all major international and local Credit and Debit Cards."
+            }
+          }
+        ]
+      })
+    },
+    // 3. WebSite Schema
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://benjicutz.vercel.app/#website",
+        "url": "https://benjicutz.vercel.app",
+        "name": "BenjiCutz Craftsman Barber Parlour",
+        "description": "Nairobi's luxury mobile barbering and executive grooming service.",
+        "publisher": {
+          "@id": "https://benjicutz.vercel.app/#barbershop"
+        }
+      })
+    }
+  ]
+});
 
 // Editorial image trail source images (barbershop lookbook)
 const trailImages = [

@@ -1,0 +1,16 @@
+{
+  "name": "BenjiCutz Parlour",
+  "short_name": "BenjiCutz",
+  "description": "Craftsman Mobile Barber Studio & Executive Grooming in Nairobi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0D0E",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}

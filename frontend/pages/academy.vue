@@ -286,11 +286,31 @@
 import { useHead } from "#imports";
 
 useHead({
-  title: "B2B Academy & Masterclasses • Craftsman Barber Studio Nairobi",
+  title: "Barber Academy & B2B Masterclasses • Precision Haircutting Nairobi",
   meta: [
     {
       name: "description",
-      content: "Accredited masterclasses in micro-airblading, precision haircutting, and mobile barber business ergonomics for technical beauty schools and salon chains in Nairobi."
+      content: "Professional accredited masterclasses in micro-airblading, anatomical fade engineering, and mobile barber business ergonomics for barbers and beauty academies in Nairobi."
+    },
+    { property: "og:title", content: "BenjiCutz Barber Academy & Masterclasses Nairobi" },
+    { property: "og:description", content: "Hands-on anatomical cutting and hairline restoration masterclasses for aspiring and master craftsmen." },
+    { property: "og:url", content: "https://benjicutz.vercel.app/academy" },
+    { property: "og:image", content: "https://benjicutz.vercel.app/images/about2.webp" }
+  ],
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Micro-Airblading & Precision Hairline Masterclass",
+        "description": "Professional 6-hour masterclass covering organic pigment blending, hairline restoration techniques, and anatomical head morphology.",
+        "provider": {
+          "@type": "Organization",
+          "name": "BenjiCutz Craftsman Academy",
+          "sameAs": "https://benjicutz.vercel.app"
+        }
+      })
     }
   ]
 });

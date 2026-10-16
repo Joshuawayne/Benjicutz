@@ -262,11 +262,71 @@ import { ref, computed } from "vue";
 import { useHead } from "#imports";
 
 useHead({
-  title: "Menu & Prices • Craftsman Mobile Barber Studio Nairobi",
+  title: "Menu & Pricing • Executive Haircuts, Beard & House Calls Nairobi",
   meta: [
     {
       name: "description",
-      content: "Explore executive haircutting, beard sculpting, micro-airblading hairline work, and VIP house-call pricing in Nairobi by Master Barber Benjamin Johnson."
+      content: "Official pricing for executive haircutting, beard sculpting, micro-airblading hairline restoration, and VIP house-call packages in Nairobi by Master Barber Benjamin Johnson."
+    },
+    { property: "og:title", content: "Service Menu & Pricing | BenjiCutz Parlour Nairobi" },
+    { property: "og:description", content: "Transparent pricing for precision haircuts, organic scalp treatments, and VIP in-suite grooming in Nairobi." },
+    { property: "og:url", content: "https://benjicutz.vercel.app/services" },
+    { property: "og:image", content: "https://benjicutz.vercel.app/images/tools.jpg" }
+  ],
+  script: [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "OfferCatalog",
+        "name": "BenjiCutz Grooming Services & House Call Menu",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "The Master Cut & Taper",
+              "description": "Bespoke shear and clipper sculpting tailored to head anatomy, finished with straight razor neck lineup and hot lather ritual.",
+              "provider": { "@type": "BarberShop", "name": "BenjiCutz Parlour" }
+            },
+            "price": "3500",
+            "priceCurrency": "KES"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Executive Beard Architecture",
+              "description": "Hot towel preparation, custom beard contouring, botanical oil treatment, and razor finish.",
+              "provider": { "@type": "BarberShop", "name": "BenjiCutz Parlour" }
+            },
+            "price": "2500",
+            "priceCurrency": "KES"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Micro-Airblading Hairline Restoration",
+              "description": "Semi-permanent organic hairline enhancement and pigment blending for crisp, youthful contours.",
+              "provider": { "@type": "BarberShop", "name": "BenjiCutz Parlour" }
+            },
+            "price": "8500",
+            "priceCurrency": "KES"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "The Presidential House-Call Suite",
+              "description": "Full mobile salon setup in your residence or executive hotel suite: haircut, beard sculpting, scalp massage, and organic facial.",
+              "provider": { "@type": "BarberShop", "name": "BenjiCutz Parlour" }
+            },
+            "price": "12000",
+            "priceCurrency": "KES"
+          }
+        ]
+      })
     }
   ]
 });
