@@ -1,7 +1,7 @@
 <template>
   <div class="homepage-root">
     <!-- HERO SECTION (Ref 1 Editorial Parlour Composition) -->
-    <section ref="heroSection" class="relative pt-4 pb-6 sm:pt-8 sm:pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-clip">
+    <section ref="heroSection" class="relative pt-4 pb-6 sm:pt-8 sm:pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden w-full max-w-full">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
         <!-- Left Column: Editorial Floating Image (desktop only) -->
         <div class="hidden lg:block lg:col-span-3 min-w-0">
@@ -20,20 +20,45 @@
           </div>
         </div>
 
-        <!-- Center Column: Display Serif Typography & CTA -->
+        <!-- Center Column: Display Serif Typography, Mobile Hero Portrait & CTA -->
         <div ref="heroCenterCol" class="order-1 lg:order-none lg:col-span-6 text-center space-y-4 sm:space-y-5 will-change-transform min-w-0">
-          <div class="space-y-2 py-1 sm:py-3">
-            <div>
-              <span ref="heroEyebrow" class="text-[11px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.3em] text-parlour-dark/70 uppercase inline-block">
-                EST. 2020 • NAIROBI MOBILE STUDIO
-              </span>
+          <!-- Subtle Lookbook Image Trail scoped ONLY to the CRAFTSMAN BARBER PARLOUR typography -->
+          <ImageTrail
+            :images="trailImages"
+            :image-width="105"
+            :image-height="135"
+            :threshold="40"
+            :lifespan="1000"
+            :max-opacity="0.65"
+            class="hero-typography-trail relative block w-full max-w-xl mx-auto"
+          >
+            <div class="space-y-2 py-1 sm:py-3">
+              <div>
+                <span ref="heroEyebrow" class="text-[11px] sm:text-xs font-bold tracking-[0.22em] sm:tracking-[0.3em] text-parlour-dark/70 uppercase inline-block">
+                  EST. 2020 • NAIROBI MOBILE STUDIO
+                </span>
+              </div>
+              
+              <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-black text-parlour-dark tracking-tighter uppercase leading-[0.92] sm:leading-[0.95]">
+                <span class="hero-line block">CRAFTSMAN</span>
+                <span class="hero-line block">BARBER</span>
+                <span class="hero-line block italic font-normal">PARLOUR</span>
+              </h1>
             </div>
-            
-            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-black text-parlour-dark tracking-tighter uppercase leading-[0.92] sm:leading-[0.95]">
-              <span class="hero-line block">CRAFTSMAN</span>
-              <span class="hero-line block">BARBER</span>
-              <span class="hero-line block italic font-normal">PARLOUR</span>
-            </h1>
+          </ImageTrail>
+
+          <!-- Mobile Hero Portrait Card: Displayed right in the hero composition on mobile screens -->
+          <div class="block lg:hidden my-3 max-w-[280px] sm:max-w-xs mx-auto">
+            <div class="hero-card-right hero-card-mobile relative group overflow-hidden rounded-sm border-2 border-parlour-dark/30 shadow-2xl aspect-[4/5] w-full">
+              <img
+                src="/images/to.webp"
+                alt="Master Craftsman Benjamin"
+                class="w-full h-full object-cover object-top"
+              />
+              <div class="absolute bottom-3 left-3 bg-parlour-dark/95 text-parlour-cream px-2.5 py-1 font-serif text-[10px] font-bold tracking-widest uppercase border border-parlour-gold/30 shadow-lg">
+                MASTER • BENJAMIN
+              </div>
+            </div>
           </div>
 
           <div ref="heroCtaWrap" class="pt-1">
@@ -52,11 +77,16 @@
               </span>
             </NuxtLink>
           </div>
+
+          <!-- Mobile Quote -->
+          <p class="block lg:hidden text-xs font-serif italic text-parlour-dark/80 leading-relaxed text-center max-w-sm mx-auto pt-1 px-2">
+            "The executive mobile studio in Nairobi for bespoke haircutting, beard sculpting, and micro-airblading hairline restoration."
+          </p>
         </div>
 
-        <!-- Right Column: Hero Portrait & Quote -->
-        <div class="order-2 lg:order-none lg:col-span-3 space-y-3 min-w-0">
-          <div ref="heroRightFrame" class="hero-card-right relative group overflow-hidden rounded-sm border-2 border-parlour-dark/30 shadow-2xl will-change-transform max-w-sm mx-auto lg:max-w-none aspect-[4/5] lg:aspect-auto lg:h-[420px]">
+        <!-- Right Column: Hero Portrait & Quote (Desktop only) -->
+        <div class="hidden lg:block lg:col-span-3 space-y-3 min-w-0">
+          <div ref="heroRightFrame" class="hero-card-right relative group overflow-hidden rounded-sm border-2 border-parlour-dark/30 shadow-2xl will-change-transform lg:h-[420px]">
             <img
               ref="heroRightImg"
               src="/images/to.webp"
@@ -67,15 +97,15 @@
               MASTER • BENJAMIN
             </div>
           </div>
-          <p ref="heroQuote" class="text-xs font-serif italic text-parlour-dark/80 leading-relaxed text-center lg:text-left max-w-sm mx-auto lg:max-w-none">
+          <p ref="heroQuote" class="text-xs font-serif italic text-parlour-dark/80 leading-relaxed text-left max-w-sm mx-auto lg:max-w-none">
             "The executive mobile studio in Nairobi for bespoke haircutting, beard sculpting, and micro-airblading hairline restoration."
           </p>
         </div>
       </div>
 
       <!-- Luxurious Marquee Ticker Ribbon (Tight Spacing) -->
-      <div class="mt-6 sm:mt-8 overflow-hidden w-full">
-        <div class="relative overflow-hidden w-full py-2.5 sm:py-3 bg-parlour-card/60 border-y border-parlour-dark/15 rounded-sm">
+      <div class="mt-6 sm:mt-8 overflow-hidden w-full max-w-full">
+        <div class="relative overflow-hidden w-full max-w-full py-2.5 sm:py-3 bg-parlour-card/60 border-y border-parlour-dark/15 rounded-sm">
           <div class="animate-luxury-marquee flex items-center gap-6 whitespace-nowrap text-xs font-bold tracking-[0.25em] uppercase text-parlour-dark">
             <span class="text-parlour-gold">★</span>
             <span>KILELESHWA</span>

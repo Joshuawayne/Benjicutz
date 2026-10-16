@@ -5,35 +5,43 @@
     @mousemove="onMouseMove"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
+    @touchstart.passive="onTouchStart"
+    @touchmove.passive="onTouchMove"
+    @touchend.passive="onTouchEnd"
   >
-    <slot />
-    <!-- Trail images rendered as absolutely-positioned fading ghosts -->
-    <div
-      v-for="img in activeImages"
-      :key="img.id"
-      class="trail-image"
-      :style="{
-        left: img.x + 'px',
-        top: img.y + 'px',
-        opacity: img.opacity,
-        transform: `translate(-50%, -50%) scale(${img.scale}) rotate(${img.rotation}deg)`,
-        width: imageWidth + 'px',
-        height: imageHeight + 'px',
-        zIndex: img.z,
-      }"
-    >
-      <img
-        :src="img.src"
-        :alt="'Trail image ' + img.index"
-        class="trail-img-inner"
-        draggable="false"
-      />
+    <!-- Subtle trail images rendered behind the text content -->
+    <div class="trail-canvas-layer">
+      <div
+        v-for="img in activeImages"
+        :key="img.id"
+        class="trail-image"
+        :style="{
+          left: img.x + 'px',
+          top: img.y + 'px',
+          opacity: img.opacity,
+          transform: `translate(-50%, -50%) scale(${img.scale}) rotate(${img.rotation}deg)`,
+          width: imageWidth + 'px',
+          height: imageHeight + 'px',
+          zIndex: 1 + (img.id % 8),
+        }"
+      >
+        <img
+          :src="img.src"
+          :alt="'Lookbook image ' + img.index"
+          class="trail-img-inner"
+          draggable="false"
+        />
+      </div>
+    </div>
+    <!-- Slot content (typography headline) layered on top -->
+    <div class="relative z-10">
+      <slot />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
 interface Props {
   /** Array of image URLs to cycle through */
@@ -50,35 +58,29 @@ interface Props {
   maxImages?: number
   /** Rotation range (degrees) per image */
   rotationRange?: number
-  /** Enable/disable lerp follow for trail images */
-  lerpFollow?: boolean
-  /** Lerp speed (0-1, lower = more lag) */
-  lerpSpeed?: number
+  /** Peak opacity for subtle elegance (0 to 1) */
+  maxOpacity?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  imageWidth: 160,
-  imageHeight: 200,
-  threshold: 80,
-  lifespan: 1200,
-  maxImages: 8,
-  rotationRange: 12,
-  lerpFollow: true,
-  lerpSpeed: 0.12,
+  imageWidth: 105,
+  imageHeight: 135,
+  threshold: 42,
+  lifespan: 1050,
+  maxImages: 6,
+  rotationRange: 7,
+  maxOpacity: 0.65,
 })
 
 interface TrailImage {
   id: number
   x: number
   y: number
-  targetX: number
-  targetY: number
   opacity: number
   scale: number
   rotation: number
   src: string
   index: number
-  z: number
   birthTime: number
 }
 
@@ -88,7 +90,7 @@ let imageIndex = 0
 let idCounter = 0
 let lastX = 0
 let lastY = 0
-let isActive = ref(false)
+const isActive = ref(false)
 let rafId: number | null = null
 
 // Velocity tracking
@@ -100,11 +102,14 @@ function getDistance(x1: number, y1: number, x2: number, y2: number): number {
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 }
 
-function spawnImage(mouseX: number, mouseY: number) {
-  if (!trailContainer.value) return
+function spawnImage(clientX: number, clientY: number) {
+  if (!trailContainer.value || !props.images.length) return
   const rect = trailContainer.value.getBoundingClientRect()
-  const x = mouseX - rect.left
-  const y = mouseY - rect.top
+  const x = clientX - rect.left
+  const y = clientY - rect.top
+
+  // Strictly only spawn when cursor is within this typography zone
+  if (x < 0 || x > rect.width || y < 0 || y > rect.height) return
 
   const rotation = (Math.random() - 0.5) * props.rotationRange * 2
   const src = props.images[imageIndex % props.images.length]
@@ -114,39 +119,40 @@ function spawnImage(mouseX: number, mouseY: number) {
     id: idCounter++,
     x,
     y,
-    targetX: x,
-    targetY: y,
     opacity: 0,
-    scale: 0.6,
+    scale: 0.65,
     rotation,
     src,
     index: imageIndex,
-    z: idCounter,
     birthTime: performance.now(),
   }
 
   activeImages.push(img)
 
-  // Enforce max images
   while (activeImages.length > props.maxImages) {
     activeImages.shift()
   }
 }
 
 function onMouseMove(e: MouseEvent) {
-  if (!isActive.value) return
+  if (!isActive.value) {
+    isActive.value = true
+    lastX = e.clientX
+    lastY = e.clientY
+    prevMouseX = e.clientX
+    prevMouseY = e.clientY
+    spawnImage(e.clientX, e.clientY)
+    return
+  }
 
-  // Track velocity
   const dx = e.clientX - prevMouseX
   const dy = e.clientY - prevMouseY
   mouseVelocity = Math.sqrt(dx * dx + dy * dy)
   prevMouseX = e.clientX
   prevMouseY = e.clientY
 
-  // Only spawn if moved past threshold distance
   const dist = getDistance(e.clientX, e.clientY, lastX, lastY)
-  // Dynamic threshold: faster movement = more frequent spawns
-  const dynamicThreshold = Math.max(props.threshold * 0.5, props.threshold - mouseVelocity * 1.5)
+  const dynamicThreshold = Math.max(props.threshold * 0.45, props.threshold - mouseVelocity * 0.6)
 
   if (dist >= dynamicThreshold) {
     spawnImage(e.clientX, e.clientY)
@@ -167,6 +173,37 @@ function onMouseLeave() {
   isActive.value = false
 }
 
+// Touch support for mobile devices
+function onTouchStart(e: TouchEvent) {
+  if (!e.touches.length) return
+  isActive.value = true
+  const t = e.touches[0]
+  lastX = t.clientX
+  lastY = t.clientY
+  prevMouseX = t.clientX
+  prevMouseY = t.clientY
+  spawnImage(t.clientX, t.clientY)
+}
+
+function onTouchMove(e: TouchEvent) {
+  if (!e.touches.length) return
+  const t = e.touches[0]
+  if (!isActive.value) {
+    onTouchStart(e)
+    return
+  }
+  const dist = getDistance(t.clientX, t.clientY, lastX, lastY)
+  if (dist >= props.threshold * 0.8) {
+    spawnImage(t.clientX, t.clientY)
+    lastX = t.clientX
+    lastY = t.clientY
+  }
+}
+
+function onTouchEnd() {
+  isActive.value = false
+}
+
 function animate() {
   const now = performance.now()
 
@@ -176,38 +213,30 @@ function animate() {
     const progress = elapsed / props.lifespan
 
     if (progress >= 1) {
-      // Remove expired images
       activeImages.splice(i, 1)
       continue
     }
 
-    // Eased lifecycle phases
-    const fadeInEnd = 0.15
+    const fadeInEnd = 0.18
     const fadeOutStart = 0.45
+    const peak = props.maxOpacity
 
     if (progress < fadeInEnd) {
-      // Quick fade-in + scale-up
       const t = progress / fadeInEnd
-      const eased = 1 - Math.pow(1 - t, 3) // ease-out cubic
-      img.opacity = eased * 0.85
-      img.scale = 0.6 + eased * 0.45
+      const eased = 1 - Math.pow(1 - t, 3)
+      img.opacity = eased * peak
+      img.scale = 0.65 + eased * 0.25 // scale up gently to 0.90
     } else if (progress > fadeOutStart) {
-      // Slow fade-out
       const t = (progress - fadeOutStart) / (1 - fadeOutStart)
-      const eased = 1 - Math.pow(1 - t, 2) // ease-in quad
-      img.opacity = 0.85 * (1 - eased)
-      img.scale = 1.05 - eased * 0.15
+      const eased = t * t
+      img.opacity = peak * (1 - eased)
+      img.scale = 0.90 - eased * 0.08
     } else {
-      // Sustain
-      img.opacity = 0.85
-      img.scale = 1.05
+      img.opacity = peak
+      img.scale = 0.90
     }
 
-    // Subtle gravity drift during life
     img.y += 0.15
-
-    // Slight rotation drift
-    img.rotation += (Math.random() - 0.5) * 0.08
   }
 
   rafId = requestAnimationFrame(animate)
@@ -225,28 +254,35 @@ onUnmounted(() => {
 <style scoped>
 .image-trail-zone {
   position: relative;
-  overflow: visible;
-  touch-action: pan-y;
+  display: block;
+  user-select: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .image-trail-zone {
-    cursor: crosshair;
-    overflow: hidden;
+    cursor: default;
   }
+}
+
+.trail-canvas-layer {
+  position: absolute;
+  inset: -30px;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
 }
 
 .trail-image {
   position: absolute;
   pointer-events: none;
   will-change: transform, opacity;
-  transition: none;
-  border-radius: 2px;
+  border-radius: 3px;
   overflow: hidden;
   box-shadow:
-    0 8px 32px rgba(20, 18, 16, 0.18),
-    0 2px 8px rgba(20, 18, 16, 0.10);
-  border: 1.5px solid rgba(20, 18, 16, 0.12);
+    0 8px 24px rgba(20, 18, 16, 0.16),
+    0 2px 8px rgba(20, 18, 16, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  background-color: #141210;
 }
 
 .trail-img-inner {
@@ -254,7 +290,6 @@ onUnmounted(() => {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: contrast(1.05) saturate(0.9);
   user-select: none;
   -webkit-user-drag: none;
 }

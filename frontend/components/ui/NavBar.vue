@@ -4,7 +4,7 @@
       <!-- Vintage Emblem / Brand Logo -->
       <NuxtLink to="/" class="flex items-center gap-2 sm:gap-4 group" @click="isMobileOpen = false">
         <div class="px-2.5 py-1 sm:px-3.5 sm:py-2 border-2 border-parlour-dark rounded-sm bg-parlour-cream text-parlour-dark font-serif font-black text-xs sm:text-sm tracking-tighter shadow-sm uppercase group-hover:bg-parlour-dark group-hover:text-parlour-cream transition-colors">
-          CRAFTSMAN
+          BenjiCutz
         </div>
         <div>
           <span class="font-serif font-bold text-xs sm:text-base text-parlour-dark block tracking-tight leading-tight">MOBILE PARLOUR</span>
@@ -144,7 +144,7 @@
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
             </svg>
-            <span>Direct WhatsApp Concierge: +254 751 022224</span>
+            <span>Direct WhatsApp Message: +254 751 022224</span>
           </a>
         </div>
 

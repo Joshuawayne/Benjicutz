@@ -115,6 +115,8 @@ html.lenis body {
   display: flex;
   flex-direction: column;
   gap: 0;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 .elastic-divider-wrap {
@@ -127,12 +129,7 @@ html.lenis body {
 
 .hero-typography-trail {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   overflow: visible;
-  border-radius: 4px;
-}
-
-/* Ensure trail images have editorial grain */
-.trail-image {
-  mix-blend-mode: multiply;
+  width: 100%;
 }
