@@ -495,7 +495,7 @@ useHead({
     // 1. LocalBusiness / BarberShop Schema for Local SEO & Search Engine Knowledge Panels
     {
       type: "application/ld+json",
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "BarberShop",
         "@id": "https://benjicutz.vercel.app/#barbershop",
@@ -549,7 +549,7 @@ useHead({
     // 2. FAQPage Schema for AI Answer Engines (Perplexity, ChatGPT, Claude, Google Gemini / SGE)
     {
       type: "application/ld+json",
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
@@ -599,7 +599,7 @@ useHead({
     // 3. WebSite Schema
     {
       type: "application/ld+json",
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
         "@id": "https://benjicutz.vercel.app/#website",

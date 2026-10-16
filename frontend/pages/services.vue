@@ -276,7 +276,7 @@ useHead({
   script: [
     {
       type: "application/ld+json",
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "OfferCatalog",
         "name": "BenjiCutz Grooming Services & House Call Menu",
