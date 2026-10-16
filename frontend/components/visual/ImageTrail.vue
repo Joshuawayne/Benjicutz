@@ -10,7 +10,7 @@
     @touchend.passive="onTouchEnd"
   >
     <!-- Subtle trail images rendered behind the text content -->
-    <div class="trail-canvas-layer">
+    <div class="trail-canvas-layer" aria-hidden="true">
       <div
         v-for="img in activeImages"
         :key="img.id"

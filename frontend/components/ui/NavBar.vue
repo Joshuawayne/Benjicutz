@@ -1,5 +1,6 @@
 <template>
   <header class="sticky top-0 z-50 bg-[#F4EFE6]/95 backdrop-blur-md border-b border-parlour-dark/10 transition-all">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[999] focus:px-4 focus:py-2 focus:bg-parlour-dark focus:text-parlour-cream focus:font-bold focus:text-xs focus:uppercase focus:tracking-widest focus:shadow-xl focus:outline-none">Skip to main content</a>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 lg:h-24 flex items-center justify-between">
       <!-- Vintage Emblem / Brand Logo -->
       <NuxtLink to="/" class="flex items-center gap-2 sm:gap-4 group" @click="isMobileOpen = false">
@@ -13,7 +14,7 @@
       </NuxtLink>
 
       <!-- Desktop Editorial Menu Navigation -->
-      <nav class="hidden md:flex items-center gap-8 lg:gap-10 text-xs font-semibold uppercase tracking-widest text-parlour-dark/80">
+      <nav aria-label="Main navigation" class="hidden md:flex items-center gap-8 lg:gap-10 text-xs font-semibold uppercase tracking-widest text-parlour-dark/80">
         <NuxtLink to="/" class="hover:text-parlour-dark hover:underline underline-offset-8 transition-all" active-class="text-parlour-dark underline font-bold">Home</NuxtLink>
         <NuxtLink to="/services" class="hover:text-parlour-dark hover:underline underline-offset-8 transition-all" active-class="text-parlour-dark underline font-bold">Menu & Prices</NuxtLink>
         <NuxtLink to="/about" class="hover:text-parlour-dark hover:underline underline-offset-8 transition-all" active-class="text-parlour-dark underline font-bold">About Us</NuxtLink>
@@ -22,7 +23,7 @@
 
       <!-- Right Actions (Desktop & Mobile) -->
       <div class="flex items-center gap-2.5 sm:gap-4">
-        <span class="hidden lg:inline-block text-[11px] font-bold text-parlour-dark/70 tracking-widest uppercase border-r border-parlour-dark/20 pr-4">
+        <span aria-hidden="true" class="hidden lg:inline-block text-[11px] font-bold text-parlour-dark/70 tracking-widest uppercase border-r border-parlour-dark/20 pr-4">
           NRB ▾
         </span>
         
@@ -81,7 +82,7 @@
         class="md:hidden bg-[#F4EFE6] border-b-2 border-parlour-dark shadow-2xl px-6 py-8 space-y-6 max-h-[85vh] overflow-y-auto"
       >
         <!-- Navigation Links -->
-        <nav class="flex flex-col space-y-4">
+        <nav aria-label="Mobile navigation" class="flex flex-col space-y-4">
           <NuxtLink
             to="/"
             class="text-xl font-serif font-black uppercase text-parlour-dark hover:text-parlour-dark/60 transition-colors flex items-center justify-between py-2 border-b border-parlour-dark/10"

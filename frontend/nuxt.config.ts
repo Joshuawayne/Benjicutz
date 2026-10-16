@@ -4,7 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
     pageTransition: { name: 'editorial-page', mode: 'out-in' },
-    layoutTransition: false
+    layoutTransition: false,
+    head: {
+      htmlAttrs: { lang: 'en' },
+    },
   },
   modules: [
     '@pinia/nuxt',

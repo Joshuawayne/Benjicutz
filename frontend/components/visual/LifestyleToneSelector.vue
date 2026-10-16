@@ -5,10 +5,14 @@
         <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-parlour-dark/60">ADAPTIVE EXPERIENCE</span>
         <h3 class="text-2xl font-serif font-black uppercase text-parlour-dark">SELECT YOUR LIFESTYLE PROFILE</h3>
       </div>
-      <div class="inline-flex p-1 bg-parlour-cream border border-parlour-dark/40 shadow-inner">
+      <div role="radiogroup" aria-label="Lifestyle profile" class="inline-flex p-1 bg-parlour-cream border border-parlour-dark/40 shadow-inner" @keydown="handleRadioKeydown">
         <button
-          v-for="mode in modes"
+          v-for="(mode, index) in modes"
           :key="mode.id"
+          :ref="el => { if (el) modeRefs[index] = el as HTMLButtonElement }"
+          role="radio"
+          :aria-checked="activeMode === mode.id"
+          :tabindex="activeMode === mode.id ? 0 : -1"
           @click="activeMode = mode.id"
           :class="[
             'px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200',
@@ -23,7 +27,7 @@
     </div>
 
     <!-- Active Mode Dynamic Highlight Card -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+    <div aria-live="polite" class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
       <div class="md:col-span-2 space-y-3">
         <div class="inline-block px-2.5 py-1 text-[10px] font-bold bg-parlour-dark text-parlour-cream uppercase tracking-widest">
           {{ selectedModeDetails.tagline }}
@@ -63,6 +67,7 @@
 import { ref, computed } from "vue";
 
 const activeMode = ref<"EXECUTIVE" | "FAMILY" | "TRENDSETTER">("EXECUTIVE");
+const modeRefs = ref<HTMLButtonElement[]>([]);
 
 const modes = [
   { id: "EXECUTIVE", label: "Corporate Executive" },
@@ -98,4 +103,24 @@ const modeDetails = {
 };
 
 const selectedModeDetails = computed(() => modeDetails[activeMode.value]);
+
+// WCAG 2.1.1: Arrow-key navigation for radiogroup
+function handleRadioKeydown(e: KeyboardEvent) {
+  const modeIds = modes.map(m => m.id) as ("EXECUTIVE" | "FAMILY" | "TRENDSETTER")[];
+  const currentIdx = modeIds.indexOf(activeMode.value);
+  let nextIdx = currentIdx;
+
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    nextIdx = (currentIdx + 1) % modeIds.length;
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    nextIdx = (currentIdx - 1 + modeIds.length) % modeIds.length;
+  } else {
+    return;
+  }
+
+  activeMode.value = modeIds[nextIdx];
+  modeRefs.value[nextIdx]?.focus();
+}
 </script>

@@ -45,6 +45,8 @@ Thumbs.db
 *.sln
 *.sw?
 
-# ─── Test coverage ───────────────────────────────────────────
+# ─── Test coverage & Scratch scripts ─────────────────────────
 coverage/
 lcov.info
+verify_*.mjs
+frontend/verify_*.mjs

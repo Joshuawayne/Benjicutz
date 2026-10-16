@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col bg-parlour-bg text-parlour-dark font-sans overflow-x-hidden w-full max-w-full">
     <NavBar />
-    <main class="flex-grow overflow-x-hidden w-full max-w-full">
+    <main id="main-content" class="flex-grow overflow-x-hidden w-full max-w-full">
       <slot />
     </main>
     <FooterSection />

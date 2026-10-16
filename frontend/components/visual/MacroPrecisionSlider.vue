@@ -10,11 +10,15 @@
       </p>
 
       <!-- Preset Switcher -->
-      <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+      <div role="radiogroup" aria-label="Comparison mode" class="flex flex-wrap items-center justify-center gap-2 pt-2" @keydown="handleTabKeydown">
         <button
-          v-for="mode in modes"
+          v-for="(mode, index) in modes"
           :key="mode.id"
           type="button"
+          :ref="el => { if (el) tabRefs[index] = el as HTMLButtonElement }"
+          role="radio"
+          :aria-checked="selectedModeId === mode.id"
+          :tabindex="selectedModeId === mode.id ? 0 : -1"
           @click="switchMode(mode.id)"
           :class="[
             'px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 border relative overflow-hidden',
@@ -31,12 +35,19 @@
     <!-- Interactive Comparison Container -->
     <div
       ref="containerRef"
+      role="slider"
+      :aria-label="currentMode.title + ' comparison'"
+      :aria-valuenow="Math.round(sliderPosition)"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      tabindex="0"
       class="relative max-w-3xl mx-auto h-[380px] sm:h-[460px] md:h-[500px] overflow-hidden shadow-2xl border-2 border-parlour-dark select-none cursor-ew-resize bg-parlour-dark touch-none group"
       @pointerdown="startDrag"
       @pointermove="onPointerMove"
       @pointerup="stopDrag"
       @pointercancel="stopDrag"
       @pointerleave="onContainerLeave"
+      @keydown="handleSliderKeydown"
     >
       <!-- "AFTER" View (Full Background) -->
       <div class="absolute inset-0 select-none">
@@ -94,7 +105,7 @@
           }"
         >
           <!-- Dual Chevron Indicator -->
-          <svg class="w-4 h-4 text-parlour-cream transition-transform duration-300" :class="{ 'scale-110 text-parlour-gold': isDragging }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg aria-hidden="true" class="w-4 h-4 text-parlour-cream transition-transform duration-300" :class="{ 'scale-110 text-parlour-gold': isDragging }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="8 7 3 12 8 17"></polyline>
             <polyline points="16 7 21 12 16 17"></polyline>
           </svg>
@@ -102,7 +113,7 @@
       </div>
 
       <!-- Bottom Interactive Status Badge -->
-      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 bg-parlour-dark/90 backdrop-blur-md rounded-full text-[9px] font-mono tracking-widest uppercase text-parlour-cream pointer-events-none border border-parlour-cream/20 flex items-center gap-2 shadow-lg">
+      <div aria-live="polite" class="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 bg-parlour-dark/90 backdrop-blur-md rounded-full text-[9px] font-mono tracking-widest uppercase text-parlour-cream pointer-events-none border border-parlour-cream/20 flex items-center gap-2 shadow-lg">
         <span class="w-1.5 h-1.5 rounded-full" :class="isDragging ? 'bg-parlour-gold animate-ping' : 'bg-parlour-gold/80'"></span>
         <span>{{ isDragging ? `PRECISION INSPECTION • ${Math.round(sliderPosition)}%` : 'DRAG TO COMPARE' }}</span>
       </div>
@@ -113,6 +124,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { gsap } from "gsap";
+
+const tabRefs = ref<HTMLButtonElement[]>([]);
 
 interface ComparisonMode {
   id: string;
@@ -274,5 +287,42 @@ const updateTargetFromPointer = (event: PointerEvent) => {
 
   targetPosition.value = Math.max(4, Math.min(96, percentage));
 };
+
+// WCAG 2.1.1: Arrow-key control for the comparison slider
+function handleSliderKeydown(e: KeyboardEvent) {
+  const step = e.shiftKey ? 10 : 2;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    targetPosition.value = Math.max(4, targetPosition.value - step);
+  } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    targetPosition.value = Math.min(96, targetPosition.value + step);
+  } else if (e.key === 'Home') {
+    e.preventDefault();
+    targetPosition.value = 4;
+  } else if (e.key === 'End') {
+    e.preventDefault();
+    targetPosition.value = 96;
+  }
+}
+
+// WCAG 2.1.1: Arrow-key navigation for the radiogroup tabs
+function handleTabKeydown(e: KeyboardEvent) {
+  const currentIdx = modes.findIndex(m => m.id === selectedModeId.value);
+  let nextIdx = currentIdx;
+
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    nextIdx = (currentIdx + 1) % modes.length;
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    nextIdx = (currentIdx - 1 + modes.length) % modes.length;
+  } else {
+    return;
+  }
+
+  switchMode(modes[nextIdx].id);
+  tabRefs.value[nextIdx]?.focus();
+}
 </script>
 

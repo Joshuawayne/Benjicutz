@@ -46,6 +46,17 @@ if (!config.isSupabaseConfigured()) {
   console.warn("⚠️  Supabase not configured — running with in-memory data. Set .env to enable persistence.");
 }
 
+// Root ping endpoint for easy uptime checks
+router.get("/", (ctx: Context) => {
+  ctx.response.status = 200;
+  ctx.response.body = {
+    name: "BenjiCutz Barber Craftsman API",
+    status: "online",
+    health: "/api/v1/health",
+    version: "1.0.0",
+  };
+});
+
 // Health Check Endpoint
 router.get("/api/v1/health", (ctx: Context) => {
   ctx.response.status = 200;
@@ -98,4 +109,4 @@ console.log(`⚡ Deno backend server running on http://localhost:${PORT}`);
 if (config.isSupabaseConfigured()) {
   console.log(`🔗 Supabase connected: ${config.supabaseUrl}`);
 }
-await app.listen({ port: PORT });
+await app.listen({ port: PORT, hostname: "0.0.0.0" });

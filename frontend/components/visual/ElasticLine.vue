@@ -3,6 +3,8 @@
     ref="containerRef"
     class="elastic-line-container"
     :style="{ height: height + 'px' }"
+    role="presentation"
+    aria-hidden="true"
     @pointermove="onPointerMove"
     @pointerleave="onPointerLeave"
   >

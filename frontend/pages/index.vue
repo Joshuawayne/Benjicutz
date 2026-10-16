@@ -1,7 +1,7 @@
 <template>
   <div class="homepage-root">
     <!-- HERO SECTION (Ref 1 Editorial Parlour Composition) -->
-    <section ref="heroSection" class="relative pt-4 pb-6 sm:pt-8 sm:pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden w-full max-w-full">
+    <section ref="heroSection" aria-label="Hero — Craftsman Barber Parlour" class="relative pt-4 pb-6 sm:pt-8 sm:pb-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden w-full max-w-full">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
         <!-- Left Column: Editorial Floating Image (desktop only) -->
         <div class="hidden lg:block lg:col-span-3 min-w-0">
@@ -71,7 +71,7 @@
             >
               <span class="relative z-10 inline-flex items-center gap-2">
                 Book House Call
-                <svg class="w-3.5 h-3.5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg aria-hidden="true" class="w-3.5 h-3.5 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </span>
@@ -104,8 +104,8 @@
       </div>
 
       <!-- Luxurious Marquee Ticker Ribbon (Tight Spacing) -->
-      <div class="mt-6 sm:mt-8 overflow-hidden w-full max-w-full">
-        <div class="relative overflow-hidden w-full max-w-full py-2.5 sm:py-3 bg-parlour-card/60 border-y border-parlour-dark/15 rounded-sm">
+      <div class="mt-6 sm:mt-8 overflow-hidden w-full max-w-full" aria-hidden="true">
+        <div class="relative overflow-hidden w-full max-w-full py-2.5 sm:py-3 bg-parlour-card/60 border-y border-parlour-dark/15 rounded-sm" role="marquee">
           <div class="animate-luxury-marquee flex items-center gap-6 whitespace-nowrap text-xs font-bold tracking-[0.25em] uppercase text-parlour-dark">
             <span class="text-parlour-gold">★</span>
             <span>KILELESHWA</span>
@@ -154,9 +154,9 @@
     </section>
 
     <!-- SECTION 2: "ABOUT US / CRAFT MANIFESTO" (Haute-Editorial Magazine Composition with Parallax) -->
-    <section ref="manifestoSection" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 my-4 rounded-sm bg-parlour-card/35 border border-parlour-dark/10 overflow-hidden">
+    <section ref="manifestoSection" aria-labelledby="manifesto-heading" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 my-4 rounded-sm bg-parlour-card/35 border border-parlour-dark/10 overflow-hidden">
       <!-- Subtle Background Ambient Watermark with Parallax -->
-      <div ref="manifestoWatermark" class="absolute -right-12 -top-12 text-[140px] md:text-[220px] font-serif font-black text-parlour-dark/[0.035] select-none pointer-events-none tracking-tighter will-change-transform">
+      <div ref="manifestoWatermark" aria-hidden="true" class="absolute -right-12 -top-12 text-[140px] md:text-[220px] font-serif font-black text-parlour-dark/[0.035] select-none pointer-events-none tracking-tighter will-change-transform">
         1920
       </div>
 
@@ -171,7 +171,7 @@
             </div>
             
             <div class="overflow-hidden">
-              <h2 class="manifesto-title text-3xl sm:text-5xl lg:text-6xl font-serif font-black uppercase text-parlour-dark tracking-tight leading-[0.98]">
+              <h2 id="manifesto-heading" class="manifesto-title text-3xl sm:text-5xl lg:text-6xl font-serif font-black uppercase text-parlour-dark tracking-tight leading-[0.98]">
                 ZERO-WAIT <br />
                 <span class="italic font-light text-parlour-dark/80">IN YOUR PRIVATE SUITE</span>
               </h2>
@@ -264,11 +264,11 @@
     </section>
 
     <!-- SECTION 3: "PRICES AND SERVICES" (Ref 2 Clean Tabular Style with Tailor's Stitch Reveal) -->
-    <section ref="pricingSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-parlour-dark/10">
+    <section ref="pricingSection" aria-labelledby="pricing-heading" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-parlour-dark/10">
       <div class="text-center mb-16 space-y-2">
         <span class="pricing-anim text-xs font-bold tracking-[0.3em] uppercase text-parlour-dark/60 block">PRICE LIST & CRAFT MENU</span>
         <div class="overflow-hidden">
-          <h2 class="pricing-title text-4xl sm:text-6xl font-serif font-black uppercase text-parlour-dark tracking-tight">
+          <h2 id="pricing-heading" class="pricing-title text-4xl sm:text-6xl font-serif font-black uppercase text-parlour-dark tracking-tight">
             PRICES AND SERVICES
           </h2>
         </div>
@@ -416,16 +416,16 @@
 
 
     <!-- SECTION 5: VIP MONTHLY HOUSE-CALL RETAINER (Elevated Prestige Background) -->
-    <section ref="retainerSection" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 my-4 bg-gradient-to-b from-transparent via-parlour-card/50 to-transparent rounded-sm">
+    <section ref="retainerSection" aria-labelledby="retainer-heading" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 my-4 bg-gradient-to-b from-transparent via-parlour-card/50 to-transparent rounded-sm">
       <!-- Subtle Decorative Parallax Monogram -->
-      <div ref="retainerWatermark" class="absolute left-1/2 top-10 -translate-x-1/2 text-[120px] sm:text-[180px] font-serif font-black text-parlour-dark/[0.025] select-none pointer-events-none tracking-widest">
+      <div ref="retainerWatermark" aria-hidden="true" class="absolute left-1/2 top-10 -translate-x-1/2 text-[120px] sm:text-[180px] font-serif font-black text-parlour-dark/[0.025] select-none pointer-events-none tracking-widest">
         VIP
       </div>
 
       <div class="text-center max-w-2xl mx-auto mb-12 space-y-2 relative z-10">
         <span class="retainer-anim text-xs font-bold tracking-[0.3em] uppercase text-parlour-dark/60 block">RECURRING LUXURY</span>
         <div class="overflow-hidden">
-          <h2 class="retainer-title text-4xl font-serif font-black uppercase text-parlour-dark tracking-tight">
+          <h2 id="retainer-heading" class="retainer-title text-4xl font-serif font-black uppercase text-parlour-dark tracking-tight">
             VIP MONTHLY RETAINERS
           </h2>
         </div>
@@ -548,9 +548,15 @@ const onCtaMouseLeave = (e: MouseEvent) => {
 
 onMounted(async () => {
   await nextTick();
+
+  // WCAG 2.3.3: Respect user's reduced-motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   gsap.registerPlugin(ScrollTrigger);
 
   mm = gsap.matchMedia();
+
+  if (prefersReducedMotion) return;
 
   // DESKTOP ONLY: Rich Parallax & Multi-Layered Scrubbing (>= 1024px)
   mm.add("(min-width: 1024px)", () => {
