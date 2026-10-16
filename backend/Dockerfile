@@ -4,17 +4,17 @@ FROM denoland/deno:alpine
 # Set working directory
 WORKDIR /app
 
-# Run as the unprivileged 'deno' user for security
-USER deno
+# Copy all backend source code
+COPY . .
 
-# Copy project metadata & lockfile first for layer caching
-COPY --chown=deno:deno deno.json deno.lock* ./
-
-# Copy the rest of the backend codebase
-COPY --chown=deno:deno . .
-
-# Pre-cache dependencies and compile main entrypoint
+# Cache dependencies and generate node_modules as root to avoid permission errors
 RUN deno cache main.ts
+
+# Ensure the unprivileged 'deno' user owns the working directory and node_modules
+RUN chown -R deno:deno /app
+
+# Switch to unprivileged 'deno' user for runtime security
+USER deno
 
 # Render exposes PORT dynamically (defaults to 10000)
 ENV PORT=10000
