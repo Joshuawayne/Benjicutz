@@ -23,6 +23,7 @@ export default defineNuxtConfig({
         { name: 'author', content: 'Benjamin Johnson' },
         { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
         { name: 'theme-color', content: '#0c0d0e' },
+        { name: 'google-site-verification', content: 'googlecb9cbe404b550e53' },
 
         // Open Graph / Facebook / LinkedIn
         { property: 'og:site_name', content: 'BenjiCutz Craftsman Parlour' },
